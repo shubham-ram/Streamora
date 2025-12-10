@@ -1,0 +1,155 @@
+// StreamHub Database Schema
+// https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+// ============================================
+// USER & AUTHENTICATION
+// ============================================
+
+model User {
+  id            String   @id @default(uuid())
+  username      String   @unique
+  email         String   @unique
+  passwordHash  String   @map("password_hash")
+  avatarUrl     String?  @map("avatar_url")
+  bio           String?
+  streamKey     String   @unique @default(uuid()) @map("stream_key")
+  isLive        Boolean  @default(false) @map("is_live")
+  createdAt     DateTime @default(now()) @map("created_at")
+  updatedAt     DateTime @updatedAt @map("updated_at")
+
+  // Relations
+  streams           Stream[]
+  chatMessages      ChatMessage[]
+  notifications     Notification[]
+  createdCategories Category[]     @relation("CategoryCreator")
+
+  // Follow relations
+  followers Follow[] @relation("Following")
+  following Follow[] @relation("Follower")
+
+  @@map("users")
+}
+
+// ============================================
+// STREAMING & VOD
+// ============================================
+
+model Stream {
+  id           String    @id @default(uuid())
+  userId       String    @map("user_id")
+  title        String
+  description  String?
+  categoryId   String?   @map("category_id")
+  isLive       Boolean   @default(true) @map("is_live")
+  vodUrl       String?   @map("vod_url")
+  thumbnailUrl String?   @map("thumbnail_url")
+  viewerCount  Int       @default(0) @map("viewer_count")
+  startedAt    DateTime  @default(now()) @map("started_at")
+  endedAt      DateTime? @map("ended_at")
+  createdAt    DateTime  @default(now()) @map("created_at")
+  updatedAt    DateTime  @updatedAt @map("updated_at")
+
+  // Relations
+  user         User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  category     Category?     @relation(fields: [categoryId], references: [id])
+  chatMessages ChatMessage[]
+
+  @@index([userId])
+  @@index([categoryId])
+  @@index([isLive])
+  @@map("streams")
+}
+
+// ============================================
+// CATEGORIES
+// ============================================
+
+model Category {
+  id         String   @id @default(uuid())
+  name       String   @unique
+  slug       String   @unique
+  isOfficial Boolean  @default(false) @map("is_official")
+  createdBy  String?  @map("created_by")
+  createdAt  DateTime @default(now()) @map("created_at")
+
+  // Relations
+  creator User?    @relation("CategoryCreator", fields: [createdBy], references: [id])
+  streams Stream[]
+
+  @@map("categories")
+}
+
+// ============================================
+// SOCIAL FEATURES
+// ============================================
+
+model Follow {
+  followerId  String   @map("follower_id")
+  followingId String   @map("following_id")
+  createdAt   DateTime @default(now()) @map("created_at")
+
+  // Relations
+  follower  User @relation("Follower", fields: [followerId], references: [id], onDelete: Cascade)
+  following User @relation("Following", fields: [followingId], references: [id], onDelete: Cascade)
+
+  @@id([followerId, followingId])
+  @@index([followingId])
+  @@map("follows")
+}
+
+// ============================================
+// CHAT
+// ============================================
+
+model ChatMessage {
+  id        String   @id @default(uuid())
+  streamId  String   @map("stream_id")
+  userId    String   @map("user_id")
+  content   String
+  timestamp Int      // Seconds from stream start (for VOD replay)
+  isDeleted Boolean  @default(false) @map("is_deleted")
+  createdAt DateTime @default(now()) @map("created_at")
+
+  // Relations
+  stream Stream @relation(fields: [streamId], references: [id], onDelete: Cascade)
+  user   User   @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([streamId])
+  @@index([userId])
+  @@map("chat_messages")
+}
+
+// ============================================
+// NOTIFICATIONS
+// ============================================
+
+enum NotificationType {
+  STREAM_LIVE
+  NEW_FOLLOWER
+}
+
+model Notification {
+  id          String           @id @default(uuid())
+  userId      String           @map("user_id")
+  type        NotificationType
+  referenceId String?          @map("reference_id") // ID of related entity
+  message     String
+  isRead      Boolean          @default(false) @map("is_read")
+  createdAt   DateTime         @default(now()) @map("created_at")
+
+  // Relations
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@index([userId])
+  @@index([isRead])
+  @@map("notifications")
+}
