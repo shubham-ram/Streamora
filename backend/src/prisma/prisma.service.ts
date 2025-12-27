@@ -1,5 +1,7 @@
 import { Injectable, OnModuleInit, OnModuleDestroy } from '@nestjs/common';
-import { PrismaClient } from '../../generated/prisma';
+import { PrismaClient } from '@prisma/client';
+import { PrismaPg } from '@prisma/adapter-pg';
+import { Pool } from 'pg';
 
 /**
  * PrismaService - Database Connection Service
@@ -24,12 +26,26 @@ import { PrismaClient } from '../../generated/prisma';
  *    - this.prisma.user.findMany()
  *    - this.prisma.stream.create()
  *    etc.
+ *
+ * PRISMA 7 CHANGES:
+ * - Requires a driver adapter (PrismaPg) to be passed to the constructor
+ * - The DATABASE_URL is now managed via the adapter, not the schema
  */
+
+// Create the pg Pool for database connections
+const connectionString = process.env.DATABASE_URL;
+const pool = new Pool({ connectionString });
+const adapter = new PrismaPg(pool);
+
 @Injectable()
 export class PrismaService
   extends PrismaClient
   implements OnModuleInit, OnModuleDestroy
 {
+  constructor() {
+    super({ adapter });
+  }
+
   /**
    * Called when the NestJS module initializes
    * Establishes connection to PostgreSQL database
@@ -45,6 +61,7 @@ export class PrismaService
    */
   async onModuleDestroy() {
     await this.$disconnect();
+    await pool.end();
     console.log('📦 Database disconnected');
   }
 }
