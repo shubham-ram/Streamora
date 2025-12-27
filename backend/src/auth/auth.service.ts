@@ -34,7 +34,7 @@ export class AuthService {
         10,
       );
 
-      const user = this.prisma.user.create({
+      const user = await this.prisma.user.create({
         data: {
           username: registerUserPayload.username,
           email: registerUserPayload.email,
@@ -42,7 +42,7 @@ export class AuthService {
         },
       });
 
-      return user;
+      return { id: user.id, username: user.username, email: user.email };
     } catch (error) {
       throw error;
     }
