@@ -3,6 +3,7 @@ import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { PrismaModule } from './prisma';
 import { AuthModule } from './auth/auth.module';
+import { UsersModule } from './users/users.module';
 
 /**
  * AppModule - Root Module of the Application
@@ -24,7 +25,7 @@ import { AuthModule } from './auth/auth.module';
  * etc.
  */
 @Module({
-  imports: [PrismaModule, AuthModule],
+  imports: [PrismaModule, AuthModule, UsersModule],
   controllers: [AppController],
   providers: [AppService],
 })
