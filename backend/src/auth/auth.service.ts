@@ -60,8 +60,8 @@ export class AuthService {
     if (!isPasswordValid) {
       throw new UnauthorizedException('Invalid password');
     }
-    const accessToken = this.generateToken(user);
-    return { accessToken };
+    const access_token = this.generateToken(user);
+    return { access_token };
   }
 
   generateToken(user: User) {
