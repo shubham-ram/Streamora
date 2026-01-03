@@ -6,19 +6,20 @@ import {
 
 import { ZodSchema, ZodError } from 'zod';
 
-export class ZodValidationPipe implements PipeTransform {
-  constructor(private schema: ZodSchema) {}
+export class ZodValidationPipe<T> implements PipeTransform<unknown, T> {
+  constructor(private schema: ZodSchema<T>) {}
 
-  transform(value: any, metadata: ArgumentMetadata) {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  transform(value: unknown, _metadata: ArgumentMetadata): T {
     try {
-      const parsedValue = this.schema.parse(value);
+      const parsedValue: T = this.schema.parse(value);
       return parsedValue;
     } catch (error) {
       if (error instanceof ZodError) {
         const errorMessage = this.formatErrorMessage(error);
-
         throw new BadRequestException(errorMessage);
       }
+      throw error;
     }
   }
 
