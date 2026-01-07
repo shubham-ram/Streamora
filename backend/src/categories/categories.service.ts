@@ -4,7 +4,7 @@ import {
   NotFoundException,
 } from '@nestjs/common';
 import { PrismaService } from 'src/prisma';
-import { createCatergoryDto } from './dto/createCategory';
+import { CreateCatergoryDto } from './dto/createCategory';
 
 @Injectable()
 export class CategoriesService {
@@ -18,7 +18,7 @@ export class CategoriesService {
   }
 
   async createCategory(
-    createCategoryPayload: createCatergoryDto,
+    createCategoryPayload: CreateCatergoryDto,
     userId: string,
   ) {
     const categoryName: string = createCategoryPayload.name;

@@ -2,7 +2,7 @@ import { Body, Controller, Get, Param, Post, UseGuards } from '@nestjs/common';
 import { ZodValidationPipe } from 'zod.validation.pipe';
 import {
   createCategorySchema,
-  type createCatergoryDto,
+  type CreateCatergoryDto,
 } from './dto/createCategory';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { CurrentUser } from 'src/auth/decorators/current-user.decorator';
@@ -28,7 +28,7 @@ export class CategoriesController {
   createCategory(
     @CurrentUser() user: User,
     @Body(new ZodValidationPipe(createCategorySchema))
-    createCategoryPayload: createCatergoryDto,
+    createCategoryPayload: CreateCatergoryDto,
   ) {
     return this.categoryService.createCategory(createCategoryPayload, user.id);
   }
