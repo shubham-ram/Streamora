@@ -23,7 +23,7 @@ export class StreamsService {
       data: { isLive: true },
     });
 
-    await this.prisma.stream.create({
+    return this.prisma.stream.create({
       data: {
         userId,
         title: createStreamPayload.title,

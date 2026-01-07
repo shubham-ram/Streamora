@@ -41,6 +41,11 @@ export class StreamsController {
     return this.streamService.getAllLiveStream();
   }
 
+  @Get('/user/:username')
+  getUserStream(@Param('username') username: string) {
+    return this.streamService.getUserStream(username);
+  }
+
   @Get(':id')
   @UseGuards(JwtAuthGuard)
   getLiveStream(@Param('id') id: string) {
@@ -56,11 +61,6 @@ export class StreamsController {
     updateStreamPayload: UpdateStreamDto,
   ) {
     return this.streamService.updateStream(id, user.id, updateStreamPayload);
-  }
-
-  @Get('/user/:username')
-  getUserStream(@Param('username') username: string) {
-    return this.streamService.getUserStream(username);
   }
 
   @Post(':id/end')
