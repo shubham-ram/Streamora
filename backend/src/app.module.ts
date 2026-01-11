@@ -6,6 +6,7 @@ import { AuthModule } from './auth/auth.module';
 import { UsersModule } from './users/users.module';
 import { CategoriesModule } from './categories/categories.module';
 import { StreamsModule } from './streams/streams.module';
+import { MediaModule } from './media/media.module';
 
 /**
  * AppModule - Root Module of the Application
@@ -33,6 +34,7 @@ import { StreamsModule } from './streams/streams.module';
     UsersModule,
     CategoriesModule,
     StreamsModule,
+    MediaModule,
   ],
   controllers: [AppController],
   providers: [AppService],
