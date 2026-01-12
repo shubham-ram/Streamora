@@ -133,4 +133,17 @@ export class StreamsService {
     });
     return { message: 'Stream ended' };
   }
+
+  async endAllStream(userId: string) {
+    await this.prisma.stream.updateMany({
+      where: { userId, isLive: true },
+      data: { isLive: false, endedAt: new Date() },
+    });
+
+    // Update user status
+    await this.prisma.user.update({
+      where: { id: userId },
+      data: { isLive: false },
+    });
+  }
 }
