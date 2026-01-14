@@ -1,0 +1,38 @@
+import Link from "next/link";
+
+const CATEGORIES = [
+  "Gaming",
+  "Music",
+  "Just Chatting",
+  "Art",
+  "Sports",
+  "Science & Tech",
+];
+
+function slugify(name: string): string {
+  return name.toLowerCase().replace(/ & /g, "-").replace(/ /g, "-");
+}
+
+export function CategoriesSection() {
+  return (
+    <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 border-t border-slate-800">
+      <h2 className="text-2xl font-bold text-white mb-8">Browse Categories</h2>
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
+        {CATEGORIES.map((category) => (
+          <Link
+            key={category}
+            href={`/category/${slugify(category)}`}
+            className="group relative aspect-[4/5] rounded-xl overflow-hidden bg-gradient-to-br from-slate-800 to-slate-900 hover:ring-2 hover:ring-purple-500 transition-all"
+          >
+            <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
+            <div className="absolute bottom-0 left-0 right-0 p-4">
+              <h3 className="text-white font-semibold text-lg group-hover:text-purple-400 transition-colors">
+                {category}
+              </h3>
+            </div>
+          </Link>
+        ))}
+      </div>
+    </section>
+  );
+}
