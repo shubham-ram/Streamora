@@ -19,6 +19,22 @@ export class MediaService implements OnModuleInit, OnModuleDestroy {
         ping: 30,
         ping_timeout: 60,
       },
+      http: {
+        port: 8888,
+        mediaroot: './media',
+        allow_origin: '*',
+      },
+      trans: {
+        ffmpeg: '/opt/homebrew/bin/ffmpeg',
+        tasks: [
+          {
+            app: 'live',
+            hls: true,
+            hlsFlags: '[hls_time=2:hls_list_size=3:hls_flags=delete_segments]',
+            hlsKeep: true,
+          },
+        ],
+      },
     };
 
     this.nms = new NodeMediaServer(config);
