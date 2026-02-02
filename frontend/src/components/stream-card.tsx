@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import { Video, User } from "lucide-react";
 
 interface StreamCardProps {
@@ -26,10 +27,11 @@ export function StreamCard({
       {/* Thumbnail */}
       <div className="relative aspect-video rounded-xl overflow-hidden bg-slate-800">
         {thumbnailUrl ? (
-          <img
+          <Image
             src={thumbnailUrl}
             alt={title}
-            className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+            fill
+            className="object-cover group-hover:scale-105 transition-transform duration-300"
           />
         ) : (
           <div className="w-full h-full bg-gradient-to-br from-slate-800 to-slate-900 flex items-center justify-center">
@@ -57,12 +59,13 @@ export function StreamCard({
 
       {/* Info */}
       <div className="flex gap-3 mt-3">
-        <div className="w-10 h-10 rounded-full bg-gradient-to-br from-purple-500 to-blue-600 flex items-center justify-center flex-shrink-0 overflow-hidden">
+        <div className="w-10 h-10 rounded-full bg-gradient-to-br from-purple-500 to-blue-600 flex items-center justify-center flex-shrink-0 overflow-hidden relative">
           {avatarUrl ? (
-            <img
+            <Image
               src={avatarUrl}
               alt={username}
-              className="w-full h-full object-cover"
+              fill
+              className="object-cover"
             />
           ) : (
             <User className="w-5 h-5 text-white" />
