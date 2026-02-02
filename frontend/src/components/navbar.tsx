@@ -1,7 +1,21 @@
+"use client";
+
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { Video, Search } from "lucide-react";
 
 export function Navbar() {
+  const router = useRouter();
+  const [searchTerm, setSearchTerm] = useState("");
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (searchTerm.trim()) {
+      router.push(`/search?q=${encodeURIComponent(searchTerm.trim())}`);
+    }
+  };
+
   return (
     <nav className="sticky top-0 z-50 bg-slate-950/80 backdrop-blur-xl border-b border-slate-800">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -17,16 +31,21 @@ export function Navbar() {
           </Link>
 
           {/* Search Bar */}
-          <div className="flex-1 max-w-md mx-8 hidden md:block">
+          <form
+            onSubmit={handleSearch}
+            className="flex-1 max-w-md mx-8 hidden md:block"
+          >
             <div className="relative">
               <input
                 type="text"
+                value={searchTerm}
+                onChange={(e) => setSearchTerm(e.target.value)}
                 placeholder="Search streams..."
                 className="w-full bg-slate-800/50 border border-slate-700 rounded-lg py-2 px-4 pl-10 text-white placeholder:text-slate-500 focus:outline-none focus:border-purple-500 focus:ring-1 focus:ring-purple-500"
               />
               <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-slate-500" />
             </div>
-          </div>
+          </form>
 
           {/* Right Side */}
           <div className="flex items-center gap-3">
