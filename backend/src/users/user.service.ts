@@ -46,6 +46,25 @@ export class UserService {
         bio: true,
         isLive: true,
         createdAt: true,
+        streams: {
+          orderBy: { startedAt: 'desc' },
+          take: 20,
+          select: {
+            id: true,
+            title: true,
+            viewerCount: true,
+            startedAt: true,
+            endedAt: true,
+            isLive: true,
+            category: {
+              select: {
+                id: true,
+                name: true,
+                slug: true,
+              },
+            },
+          },
+        },
         _count: {
           select: { followers: true, following: true },
         },
