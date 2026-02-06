@@ -51,7 +51,7 @@ export default async function UserProfilePage({ params }: PageProps) {
   }
 
   return (
-    <div className="min-h-screen bg-slate-950">
+    <div className="min-h-screen bg-page-bg">
       <Navbar />
       <ProfileHeader user={user} />
       <UserStreams streams={user.streams} username={user.username} />

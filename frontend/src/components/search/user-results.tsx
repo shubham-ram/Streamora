@@ -19,7 +19,7 @@ export function UserResults({ users }: UserResultsProps) {
 
   return (
     <div>
-      <h2 className="text-lg font-semibold text-white mb-4 flex items-center gap-2">
+      <h2 className="text-lg font-semibold text-fg-primary mb-4 flex items-center gap-2">
         <User className="w-5 h-5" />
         Users
       </h2>
@@ -28,9 +28,9 @@ export function UserResults({ users }: UserResultsProps) {
           <Link
             key={user.id}
             href={`/user/${user.username}`}
-            className="flex items-center gap-3 p-4 bg-slate-800/50 rounded-xl hover:bg-slate-800 transition-colors"
+            className="flex items-center gap-3 p-4 bg-surface-secondary/50 rounded-xl hover:bg-surface-secondary transition-colors"
           >
-            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-purple-500 to-blue-600 flex items-center justify-center overflow-hidden relative">
+            <div className="w-10 h-10 rounded-full bg-gradient-to-br from-brand-primary to-brand-secondary flex items-center justify-center overflow-hidden relative">
               {user.avatarUrl ? (
                 <Image
                   src={user.avatarUrl}
@@ -40,19 +40,19 @@ export function UserResults({ users }: UserResultsProps) {
                   className="w-full h-full object-cover"
                 />
               ) : (
-                <User className="w-5 h-5 text-white" />
+                <User className="w-5 h-5 text-fg-primary" />
               )}
             </div>
             <div className="flex-1 min-w-0">
-              <h3 className="text-white font-medium truncate">
+              <h3 className="text-fg-primary font-medium truncate">
                 {user.displayName || user.username}
               </h3>
-              <p className="text-slate-400 text-sm truncate">
+              <p className="text-fg-secondary text-sm truncate">
                 @{user.username}
               </p>
             </div>
             {user.isLive && (
-              <span className="px-2 py-0.5 bg-red-500 text-white text-xs font-semibold rounded">
+              <span className="px-2 py-0.5 bg-status-live text-fg-primary text-xs font-semibold rounded">
                 LIVE
               </span>
             )}

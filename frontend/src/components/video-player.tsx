@@ -102,8 +102,8 @@ export function VideoPlayer({
       {isLoading && !displayError && (
         <div className="absolute inset-0 flex items-center justify-center bg-black/80">
           <div className="flex flex-col items-center gap-3">
-            <div className="w-10 h-10 border-4 border-purple-500 border-t-transparent rounded-full animate-spin" />
-            <p className="text-white text-sm">Loading stream...</p>
+            <div className="w-10 h-10 border-4 border-brand-primary border-t-transparent rounded-full animate-spin" />
+            <p className="text-fg-primary text-sm">Loading stream...</p>
           </div>
         </div>
       )}
@@ -112,7 +112,7 @@ export function VideoPlayer({
         <div className="absolute inset-0 flex items-center justify-center bg-black/80">
           <div className="flex flex-col items-center gap-3 text-center px-4">
             <svg
-              className="w-12 h-12 text-slate-500"
+              className="w-12 h-12 text-fg-muted"
               fill="none"
               viewBox="0 0 24 24"
               stroke="currentColor"
@@ -124,7 +124,7 @@ export function VideoPlayer({
                 d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"
               />
             </svg>
-            <p className="text-slate-400 text-sm">{displayError}</p>
+            <p className="text-fg-secondary text-sm">{displayError}</p>
           </div>
         </div>
       )}

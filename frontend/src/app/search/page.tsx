@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
@@ -35,7 +35,7 @@ interface SearchResults {
   }>;
 }
 
-export default function SearchPage() {
+function SearchContent() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const query = searchParams.get("q") || "";
@@ -81,9 +81,7 @@ export default function SearchPage() {
     : 0;
 
   return (
-    <div className="min-h-screen bg-slate-950">
-      <Navbar />
-
+    <>
       <div className="max-w-4xl mx-auto px-4 py-8">
         <SearchInput
           value={searchTerm}
@@ -93,7 +91,7 @@ export default function SearchPage() {
         />
 
         {query && (
-          <p className="text-slate-400 mb-6">
+          <p className="text-fg-secondary mb-6">
             {isLoading
               ? "Searching..."
               : `${totalResults} results for "${query}"`}
@@ -111,7 +109,23 @@ export default function SearchPage() {
 
         {!query && <EmptyState />}
       </div>
+    </>
+  );
+}
 
+export default function SearchPage() {
+  return (
+    <div className="min-h-screen bg-page-bg">
+      <Navbar />
+      <Suspense
+        fallback={
+          <div className="max-w-4xl mx-auto px-4 py-8 text-fg-secondary">
+            Loading...
+          </div>
+        }
+      >
+        <SearchContent />
+      </Suspense>
       <Footer />
     </div>
   );

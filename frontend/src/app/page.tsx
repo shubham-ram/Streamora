@@ -38,7 +38,7 @@ export default async function HomePage() {
   const streams = await getLiveStreams();
 
   return (
-    <div className="min-h-screen bg-slate-950">
+    <div className="min-h-screen bg-page-bg">
       <Navbar />
       <HeroSection />
       <LiveStreamsSection streams={streams} />

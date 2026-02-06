@@ -21,12 +21,12 @@ export function SearchInput({
           value={value}
           onChange={(e) => onChange(e.target.value)}
           placeholder="Search streams, users, categories..."
-          className="w-full bg-slate-800/50 border border-slate-700 rounded-xl py-4 px-6 pl-14 text-white text-lg placeholder:text-slate-500 focus:outline-none focus:border-purple-500 focus:ring-2 focus:ring-purple-500/20"
+          className="w-full bg-surface-secondary/50 border border-border-subtle rounded-xl py-4 px-6 pl-14 text-fg-primary text-lg placeholder:text-fg-muted focus:outline-none focus:border-brand-primary focus:ring-2 focus:ring-brand-primary/20"
           autoFocus
         />
-        <Search className="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-slate-500" />
+        <Search className="absolute left-5 top-1/2 -translate-y-1/2 w-5 h-5 text-fg-muted" />
         {isLoading && (
-          <Loader2 className="absolute right-5 top-1/2 -translate-y-1/2 w-5 h-5 text-purple-500 animate-spin" />
+          <Loader2 className="absolute right-5 top-1/2 -translate-y-1/2 w-5 h-5 text-brand-primary animate-spin" />
         )}
       </div>
     </form>

@@ -44,12 +44,12 @@ export default function LoginPage() {
   };
 
   return (
-    <Card className="bg-slate-900/80 backdrop-blur-xl border-slate-800 shadow-2xl">
+    <Card className="bg-surface-primary/80 backdrop-blur-xl border-border-main shadow-2xl">
       <CardHeader className="space-y-1 text-center">
         <div className="flex justify-center mb-2">
-          <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-purple-500 to-blue-600 flex items-center justify-center">
+          <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-brand-primary to-brand-secondary flex items-center justify-center">
             <svg
-              className="w-7 h-7 text-white"
+              className="w-7 h-7 text-fg-primary"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -63,22 +63,22 @@ export default function LoginPage() {
             </svg>
           </div>
         </div>
-        <CardTitle className="text-2xl font-bold text-white">
+        <CardTitle className="text-2xl font-bold text-fg-primary">
           Welcome back
         </CardTitle>
-        <CardDescription className="text-slate-400">
+        <CardDescription className="text-fg-secondary">
           Sign in to your StreamHub account
         </CardDescription>
       </CardHeader>
       <form onSubmit={handleSubmit}>
         <CardContent className="space-y-4">
           {error && (
-            <div className="p-3 text-sm text-red-400 bg-red-500/10 border border-red-500/20 rounded-lg">
+            <div className="p-3 text-sm text-destructive bg-destructive/10 border border-destructive/20 rounded-lg">
               {error}
             </div>
           )}
           <div className="space-y-2">
-            <Label htmlFor="email" className="text-slate-200">
+            <Label htmlFor="email" className="text-fg-secondary">
               Email
             </Label>
             <Input
@@ -90,17 +90,17 @@ export default function LoginPage() {
                 setFormData({ ...formData, email: e.target.value })
               }
               required
-              className="bg-slate-800/50 border-slate-700 text-white placeholder:text-slate-500 focus:border-purple-500"
+              className="bg-surface-secondary/50 border-border-subtle text-fg-primary placeholder:text-fg-muted focus:border-brand-primary"
             />
           </div>
           <div className="space-y-2">
             <div className="flex items-center justify-between">
-              <Label htmlFor="password" className="text-slate-200">
+              <Label htmlFor="password" className="text-fg-secondary">
                 Password
               </Label>
               <Link
                 href="/forgot-password"
-                className="text-sm text-purple-400 hover:text-purple-300"
+                className="text-sm text-brand-primary-light hover:text-brand-primary"
               >
                 Forgot password?
               </Link>
@@ -114,7 +114,7 @@ export default function LoginPage() {
                 setFormData({ ...formData, password: e.target.value })
               }
               required
-              className="bg-slate-800/50 border-slate-700 text-white placeholder:text-slate-500 focus:border-purple-500"
+              className="bg-surface-secondary/50 border-border-subtle text-fg-primary placeholder:text-fg-muted focus:border-brand-primary"
             />
           </div>
         </CardContent>
@@ -122,15 +122,15 @@ export default function LoginPage() {
           <Button
             type="submit"
             disabled={isLoading}
-            className="w-full bg-gradient-to-r from-purple-600 to-blue-600 hover:from-purple-500 hover:to-blue-500 text-white font-medium"
+            className="w-full bg-gradient-to-r from-brand-primary-dark to-brand-secondary hover:from-brand-primary hover:to-brand-secondary-light text-fg-primary font-medium"
           >
             {isLoading ? "Signing in..." : "Sign in"}
           </Button>
-          <p className="text-sm text-slate-400 text-center">
+          <p className="text-sm text-fg-secondary text-center">
             Don&apos;t have an account?{" "}
             <Link
               href="/register"
-              className="text-purple-400 hover:text-purple-300 font-medium"
+              className="text-brand-primary-light hover:text-brand-primary font-medium"
             >
               Sign up
             </Link>
