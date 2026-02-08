@@ -4,6 +4,7 @@ import {
   HeroSection,
   LiveStreamsSection,
   CategoriesSection,
+  FollowingStreamsSection,
 } from "@/components/home";
 
 interface Stream {
@@ -41,6 +42,7 @@ export default async function HomePage() {
     <div className="min-h-screen bg-page-bg">
       <Navbar />
       <HeroSection />
+      <FollowingStreamsSection />
       <LiveStreamsSection streams={streams} />
       <CategoriesSection />
       <Footer />
