@@ -46,6 +46,11 @@ export class StreamsController {
     return this.streamService.getUserStream(username);
   }
 
+  @Get('/user/:username/live')
+  getLiveStreamByUsername(@Param('username') username: string) {
+    return this.streamService.getLiveStreamByUsername(username);
+  }
+
   @Get(':id')
   @UseGuards(JwtAuthGuard)
   getLiveStream(@Param('id') id: string) {

@@ -113,6 +113,33 @@ export class StreamsService {
     });
   }
 
+  async getLiveStreamByUsername(username: string) {
+    const user = await this.prisma.user.findUnique({
+      where: { username },
+    });
+
+    if (!user) throw new NotFoundException('User not found');
+
+    const stream = await this.prisma.stream.findFirst({
+      where: { userId: user.id, isLive: true },
+      include: {
+        category: { select: { id: true, name: true, slug: true } },
+      },
+    });
+
+    if (!stream) throw new NotFoundException('User is not live');
+
+    return {
+      ...stream,
+      hlsUrl: `http://localhost:8888/live/${user.streamKey}/index.m3u8`,
+      user: {
+        id: user.id,
+        username: user.username,
+        avatarUrl: user.avatarUrl,
+      },
+    };
+  }
+
   async endStream(id: string, userId: string) {
     const stream = await this.prisma.stream.findUnique({ where: { id } });
 
