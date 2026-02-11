@@ -8,6 +8,7 @@ import { CategoriesModule } from './categories/categories.module';
 import { StreamsModule } from './streams/streams.module';
 import { MediaModule } from './media/media.module';
 import { SearchModule } from './search/search.module';
+import { FollowModule } from './follow/follow.module';
 
 /**
  * AppModule - Root Module of the Application
@@ -37,6 +38,7 @@ import { SearchModule } from './search/search.module';
     StreamsModule,
     MediaModule,
     SearchModule,
+    FollowModule,
   ],
   controllers: [AppController],
   providers: [AppService],
