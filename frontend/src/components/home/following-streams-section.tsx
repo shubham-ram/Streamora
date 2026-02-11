@@ -13,7 +13,6 @@ interface FollowedStream {
     id: string;
     username: string;
     avatarUrl?: string;
-    streamKey: string;
   };
 }
 
@@ -89,7 +88,6 @@ export function FollowingStreamsSection() {
             avatarUrl={stream.user.avatarUrl}
             viewerCount={stream.viewerCount}
             category={stream.category?.name}
-            streamKey={stream.user.streamKey}
           />
         ))}
       </div>

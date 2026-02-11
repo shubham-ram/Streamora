@@ -11,7 +11,6 @@ interface Stream {
     id: string;
     username: string;
     avatarUrl?: string;
-    streamKey: string;
   };
   category?: {
     name: string;
@@ -52,7 +51,6 @@ export function LiveStreamsSection({ streams }: LiveStreamsSectionProps) {
               thumbnailUrl={stream.thumbnailUrl}
               viewerCount={stream.viewerCount}
               category={stream.category?.name}
-              streamKey={stream.user.streamKey}
             />
           ))}
         </div>

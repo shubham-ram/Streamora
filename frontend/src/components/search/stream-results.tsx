@@ -5,7 +5,7 @@ interface Stream {
   id: string;
   title: string;
   viewerCount: number;
-  user: { id: string; username: string; streamKey: string };
+  user: { id: string; username: string };
   category?: { name: string };
 }
 
@@ -26,7 +26,7 @@ export function StreamResults({ streams }: StreamResultsProps) {
         {streams.map((stream) => (
           <Link
             key={stream.id}
-            href={`/watch/${stream.user.streamKey}`}
+            href={`/watch/${stream.user.username}`}
             className="flex items-center gap-4 p-4 bg-surface-secondary/50 rounded-xl hover:bg-surface-secondary transition-colors"
           >
             <div className="w-12 h-12 rounded-lg bg-gradient-to-br from-brand-primary to-brand-secondary flex items-center justify-center">

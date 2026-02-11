@@ -18,7 +18,7 @@ interface SearchResults {
     id: string;
     title: string;
     viewerCount: number;
-    user: { id: string; username: string; streamKey: string };
+    user: { id: string; username: string };
     category?: { name: string; slug: string };
   }>;
   users: Array<{

@@ -41,7 +41,6 @@ export class SearchService {
             id: true,
             username: true,
             avatarUrl: true,
-            streamKey: true,
           },
         },
         category: { select: { id: true, name: true, slug: true } },

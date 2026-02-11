@@ -16,7 +16,6 @@ interface Stream {
     id: string;
     username: string;
     avatarUrl?: string;
-    streamKey: string;
   };
   category?: {
     name: string;

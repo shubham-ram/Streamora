@@ -10,7 +10,6 @@ interface StreamCardProps {
   thumbnailUrl?: string;
   viewerCount: number;
   category?: string;
-  streamKey: string;
 }
 
 export function StreamCard({
@@ -20,10 +19,9 @@ export function StreamCard({
   thumbnailUrl,
   viewerCount,
   category,
-  streamKey,
 }: StreamCardProps) {
   return (
-    <Link href={`/watch/${streamKey}`} className="group block">
+    <Link href={`/watch/${username}`} className="group block">
       {/* Thumbnail */}
       <div className="relative aspect-video rounded-xl overflow-hidden bg-surface-secondary">
         {thumbnailUrl ? (
