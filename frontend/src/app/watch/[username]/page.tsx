@@ -3,6 +3,9 @@
 import { useParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { VideoPlayer } from "@/components/video-player";
+import { ChatPanel } from "@/components/chat";
+import Image from "next/image";
+import { User } from "lucide-react";
 
 interface StreamData {
   id: string;
@@ -66,58 +69,66 @@ export default function WatchPage() {
   }
 
   return (
-    <div className="min-h-screen bg-page-bg">
-      {/* Video Player Section */}
-      <div className="w-full aspect-video max-h-[70vh] bg-black">
-        <VideoPlayer src={hlsUrl} className="w-full h-full" />
-      </div>
-
-      {/* Stream Info Section */}
-      <div className="max-w-7xl mx-auto px-4 py-6">
-        <div className="flex items-start gap-4">
-          {/* Streamer Avatar */}
-          <div className="w-12 h-12 rounded-full bg-gradient-to-br from-brand-primary to-brand-secondary flex items-center justify-center flex-shrink-0">
-            <svg
-              className="w-6 h-6 text-fg-primary"
-              fill="none"
-              viewBox="0 0 24 24"
-              stroke="currentColor"
-            >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth={2}
-                d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"
-              />
-            </svg>
+    <div className="h-screen bg-page-bg flex flex-col">
+      {/* Main Content: Video + Chat */}
+      <div className="flex-1 flex overflow-hidden">
+        {/* Video + Info Section */}
+        <div className="flex-1 flex flex-col min-w-0">
+          {/* Video Player */}
+          <div className="w-full aspect-video bg-black">
+            <VideoPlayer src={hlsUrl} className="w-full h-full" />
           </div>
 
-          <div className="flex-1">
-            <h1 className="text-xl font-bold text-fg-primary">
-              {stream.title}
-            </h1>
-            <p className="text-fg-secondary text-sm mt-1">
-              {stream.user.displayName || stream.user.username}
-            </p>
-            <div className="flex items-center gap-2 mt-2">
-              <span className="px-2 py-0.5 bg-status-live text-fg-primary text-xs font-medium rounded">
-                LIVE
-              </span>
-              <span className="text-fg-muted text-sm">
-                • {stream.viewerCount.toLocaleString()} viewers
-              </span>
-              {stream.category && (
-                <span className="text-fg-muted text-sm">
-                  • {stream.category.name}
-                </span>
-              )}
+          {/* Stream Info */}
+          <div className="px-4 py-4 overflow-y-auto">
+            <div className="flex items-start gap-4 max-w-5xl">
+              {/* Avatar */}
+              <div className="w-12 h-12 rounded-full bg-gradient-to-br from-brand-primary to-brand-secondary flex items-center justify-center flex-shrink-0 overflow-hidden relative">
+                {stream.user.avatarUrl ? (
+                  <Image
+                    src={stream.user.avatarUrl}
+                    alt={stream.user.username}
+                    fill
+                    className="object-cover"
+                  />
+                ) : (
+                  <User className="w-6 h-6 text-fg-primary" />
+                )}
+              </div>
+
+              <div className="flex-1 min-w-0">
+                <h1 className="text-lg font-bold text-fg-primary truncate">
+                  {stream.title}
+                </h1>
+                <p className="text-fg-secondary text-sm mt-0.5">
+                  {stream.user.displayName || stream.user.username}
+                </p>
+                <div className="flex items-center gap-2 mt-1.5 flex-wrap">
+                  <span className="px-2 py-0.5 bg-status-live text-fg-primary text-xs font-medium rounded uppercase">
+                    Live
+                  </span>
+                  <span className="text-fg-muted text-sm">
+                    {stream.viewerCount.toLocaleString()} viewers
+                  </span>
+                  {stream.category && (
+                    <span className="px-2 py-0.5 bg-surface-secondary text-fg-secondary text-xs rounded">
+                      {stream.category.name}
+                    </span>
+                  )}
+                </div>
+              </div>
+
+              {/* Follow Button */}
+              <button className="px-4 py-2 bg-brand-primary-dark hover:bg-brand-primary text-fg-primary text-sm font-medium rounded-lg transition-colors flex-shrink-0">
+                Follow
+              </button>
             </div>
           </div>
+        </div>
 
-          {/* Follow Button */}
-          <button className="px-4 py-2 bg-brand-primary-dark hover:bg-brand-primary text-fg-primary font-medium rounded-lg transition-colors">
-            Follow
-          </button>
+        {/* Chat Sidebar */}
+        <div className="w-[340px] flex-shrink-0 hidden lg:flex">
+          <ChatPanel streamId={stream.id} />
         </div>
       </div>
     </div>
