@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import { Navbar } from "@/components/navbar";
 import { Footer } from "@/components/footer";
 import { ProfileHeader, UserStreams } from "@/components/profile";
+import { API_URL } from "@/lib/utils";
 
 interface UserProfile {
   id: string;
@@ -28,7 +29,7 @@ interface UserProfile {
 
 async function getUser(username: string): Promise<UserProfile | null> {
   try {
-    const res = await fetch(`http://localhost:8000/api/user/${username}`, {
+    const res = await fetch(`${API_URL}/api/user/${username}`, {
       cache: "no-store",
     });
     if (!res.ok) return null;

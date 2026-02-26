@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState, useCallback } from "react";
 import { io, Socket } from "socket.io-client";
+import { API_URL } from "@/lib/utils";
 
 export interface ChatMessage {
   id: string;
@@ -42,7 +43,7 @@ export function useChat({
 
     const token = localStorage.getItem("token");
 
-    const socket = io("http://localhost:8000", {
+    const socket = io(API_URL, {
       path: "/socket.io",
       auth: { token },
       query: { streamId },

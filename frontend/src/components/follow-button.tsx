@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { UserPlus, UserMinus, Loader2 } from "lucide-react";
+import { API_URL } from "@/lib/utils";
 
 interface FollowButtonProps {
   userId: string;
@@ -21,7 +22,7 @@ export function FollowButton({
     setIsLoading(true);
     try {
       const endpoint = isFollowing ? "unfollow" : "follow";
-      const res = await fetch(`http://localhost:8000/api/follow/${endpoint}`, {
+      const res = await fetch(`${API_URL}/api/follow/${endpoint}`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

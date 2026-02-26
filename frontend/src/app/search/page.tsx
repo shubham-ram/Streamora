@@ -12,6 +12,7 @@ import {
   EmptyState,
   NoResults,
 } from "@/components/search";
+import { API_URL } from "@/lib/utils";
 
 interface SearchResults {
   streams: Array<{
@@ -53,7 +54,7 @@ function SearchContent() {
     setIsLoading(true);
     try {
       const res = await fetch(
-        `http://localhost:8000/api/search?q=${encodeURIComponent(term)}`,
+        `${API_URL}/api/search?q=${encodeURIComponent(term)}`,
       );
       if (res.ok) {
         setResults(await res.json());

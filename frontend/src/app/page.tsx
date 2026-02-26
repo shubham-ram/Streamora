@@ -6,6 +6,7 @@ import {
   CategoriesSection,
   FollowingStreamsSection,
 } from "@/components/home";
+import { API_URL } from "@/lib/utils";
 
 interface Stream {
   id: string;
@@ -24,7 +25,7 @@ interface Stream {
 
 async function getLiveStreams(): Promise<Stream[]> {
   try {
-    const res = await fetch("http://localhost:8000/api/streams", {
+    const res = await fetch(`${API_URL}/api/streams`, {
       cache: "no-store",
     });
     if (!res.ok) return [];

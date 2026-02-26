@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import { Users } from "lucide-react";
 import { StreamCard } from "@/components/stream-card";
+import { API_URL } from "@/lib/utils";
 
 interface FollowedStream {
   id: string;
@@ -35,7 +36,7 @@ export function FollowingStreamsSection() {
 
   const fetchFollowingStreams = async (token: string) => {
     try {
-      const res = await fetch("http://localhost:8000/api/follow/streams", {
+      const res = await fetch(`${API_URL}/api/follow/streams`, {
         headers: { Authorization: `Bearer ${token}` },
       });
       if (res.ok) {
