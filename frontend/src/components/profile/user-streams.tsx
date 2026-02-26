@@ -33,11 +33,22 @@ export function UserStreams({ streams, username }: UserStreamsProps) {
             href={`/watch/${username}`}
             className="block p-4 bg-gradient-to-r from-brand-primary/20 to-brand-secondary/20 border border-brand-primary/30 rounded-xl hover:border-brand-primary/60 transition-colors"
           >
-            <div className="flex items-center gap-4">
-              <div className="w-16 h-16 rounded-lg bg-gradient-to-br from-brand-primary to-brand-secondary flex items-center justify-center">
-                <Video className="w-8 h-8 text-fg-primary" />
+            <div className="flex flex-col sm:flex-row items-start sm:items-center gap-4">
+              <div className="flex items-center gap-4 w-full sm:w-auto">
+                <div className="w-16 h-16 rounded-lg bg-gradient-to-br from-brand-primary to-brand-secondary flex items-center justify-center flex-shrink-0">
+                  <Video className="w-8 h-8 text-fg-primary" />
+                </div>
+                <div className="flex-1 sm:hidden">
+                  <h3 className="text-lg font-semibold text-fg-primary line-clamp-1">
+                    {liveStream.title}
+                  </h3>
+                  <p className="text-fg-secondary text-sm">
+                    {liveStream.viewerCount} viewers
+                  </p>
+                </div>
               </div>
-              <div className="flex-1">
+
+              <div className="flex-1 hidden sm:block">
                 <h3 className="text-lg font-semibold text-fg-primary">
                   {liveStream.title}
                 </h3>
@@ -46,9 +57,12 @@ export function UserStreams({ streams, username }: UserStreamsProps) {
                   {liveStream.viewerCount} viewers
                 </p>
               </div>
-              <span className="px-4 py-2 bg-status-live text-fg-primary font-semibold rounded-lg">
-                Watch Now
-              </span>
+
+              <div className="w-full sm:w-auto mt-2 sm:mt-0">
+                <span className="block w-full sm:w-auto text-center px-4 py-2 bg-status-live text-fg-primary font-semibold rounded-lg">
+                  Watch Now
+                </span>
+              </div>
             </div>
           </Link>
         </div>
@@ -56,9 +70,7 @@ export function UserStreams({ streams, username }: UserStreamsProps) {
 
       {/* Past Streams */}
       <div>
-        <h2 className="text-xl font-bold text-fg-primary mb-4">
-          Past Streams
-        </h2>
+        <h2 className="text-xl font-bold text-fg-primary mb-4">Past Streams</h2>
         {pastStreams.length > 0 ? (
           <div className="space-y-3">
             {pastStreams.map((stream) => (

@@ -29,9 +29,9 @@ export function ProfileHeader({ user }: ProfileHeaderProps) {
 
       {/* Profile Info */}
       <div className="max-w-4xl mx-auto px-4 -mt-16">
-        <div className="flex flex-col sm:flex-row items-start sm:items-end gap-4">
+        <div className="flex flex-col sm:flex-row items-center sm:items-end gap-4 text-center sm:text-left">
           {/* Avatar */}
-          <div className="w-32 h-32 rounded-full bg-gradient-to-br from-brand-primary to-brand-secondary flex items-center justify-center overflow-hidden border-4 border-page-bg relative">
+          <div className="w-32 h-32 rounded-full bg-gradient-to-br from-brand-primary to-brand-secondary flex items-center justify-center overflow-hidden border-4 border-page-bg relative flex-shrink-0">
             {user.avatarUrl ? (
               <Image
                 src={user.avatarUrl}
@@ -60,7 +60,7 @@ export function ProfileHeader({ user }: ProfileHeaderProps) {
           </div>
 
           {/* Follow Button - placeholder for now */}
-          <button className="px-6 py-2 bg-brand-primary-dark hover:bg-brand-primary text-fg-primary font-medium rounded-lg transition-colors">
+          <button className="px-6 py-2 bg-brand-primary-dark hover:bg-brand-primary text-fg-primary font-medium rounded-lg transition-colors w-full sm:w-auto">
             Follow
           </button>
         </div>

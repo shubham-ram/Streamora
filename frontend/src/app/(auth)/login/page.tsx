@@ -3,6 +3,7 @@
 import { useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { API_URL } from "@/lib/utils";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -27,7 +28,7 @@ export default function LoginPage() {
     setError("");
 
     try {
-      const res = await fetch("http://localhost:3001/api/auth/login", {
+      const res = await fetch(`${API_URL}/api/auth/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(formData),
@@ -44,12 +45,12 @@ export default function LoginPage() {
   };
 
   return (
-    <Card className="bg-surface-primary/80 backdrop-blur-xl border-border-main shadow-2xl">
+    <Card className="glass-heavy rounded-2xl shadow-2xl gradient-border">
       <CardHeader className="space-y-1 text-center">
-        <div className="flex justify-center mb-2">
-          <div className="w-12 h-12 rounded-xl bg-gradient-to-br from-brand-primary to-brand-secondary flex items-center justify-center">
+        <div className="flex justify-center mb-3">
+          <div className="w-14 h-14 rounded-2xl bg-gradient-to-br from-brand-primary to-brand-secondary flex items-center justify-center glow-md">
             <svg
-              className="w-7 h-7 text-fg-primary"
+              className="w-8 h-8 text-fg-primary"
               fill="none"
               stroke="currentColor"
               viewBox="0 0 24 24"
@@ -73,7 +74,7 @@ export default function LoginPage() {
       <form onSubmit={handleSubmit}>
         <CardContent className="space-y-4">
           {error && (
-            <div className="p-3 text-sm text-destructive bg-destructive/10 border border-destructive/20 rounded-lg">
+            <div className="p-3 text-sm text-destructive bg-destructive/10 border border-destructive/20 rounded-xl">
               {error}
             </div>
           )}
@@ -90,7 +91,7 @@ export default function LoginPage() {
                 setFormData({ ...formData, email: e.target.value })
               }
               required
-              className="bg-surface-secondary/50 border-border-subtle text-fg-primary placeholder:text-fg-muted focus:border-brand-primary"
+              className="bg-surface-secondary/40 border-border-main text-fg-primary placeholder:text-fg-muted focus:border-brand-primary/50 focus:shadow-[0_0_15px_-3px_oklch(0.45_0.2_293_/_20%)] rounded-xl transition-all"
             />
           </div>
           <div className="space-y-2">
@@ -100,7 +101,7 @@ export default function LoginPage() {
               </Label>
               <Link
                 href="/forgot-password"
-                className="text-sm text-brand-primary-light hover:text-brand-primary"
+                className="text-sm text-brand-primary-light hover:text-brand-accent transition-colors"
               >
                 Forgot password?
               </Link>
@@ -114,7 +115,7 @@ export default function LoginPage() {
                 setFormData({ ...formData, password: e.target.value })
               }
               required
-              className="bg-surface-secondary/50 border-border-subtle text-fg-primary placeholder:text-fg-muted focus:border-brand-primary"
+              className="bg-surface-secondary/40 border-border-main text-fg-primary placeholder:text-fg-muted focus:border-brand-primary/50 focus:shadow-[0_0_15px_-3px_oklch(0.45_0.2_293_/_20%)] rounded-xl transition-all"
             />
           </div>
         </CardContent>
@@ -122,7 +123,7 @@ export default function LoginPage() {
           <Button
             type="submit"
             disabled={isLoading}
-            className="w-full bg-gradient-to-r from-brand-primary-dark to-brand-secondary hover:from-brand-primary hover:to-brand-secondary-light text-fg-primary font-medium"
+            className="w-full btn-premium text-fg-primary font-medium rounded-xl py-2.5"
           >
             {isLoading ? "Signing in..." : "Sign in"}
           </Button>
@@ -130,7 +131,7 @@ export default function LoginPage() {
             Don&apos;t have an account?{" "}
             <Link
               href="/register"
-              className="text-brand-primary-light hover:text-brand-primary font-medium"
+              className="text-brand-primary-light hover:text-brand-accent font-medium transition-colors"
             >
               Sign up
             </Link>

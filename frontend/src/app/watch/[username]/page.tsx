@@ -6,6 +6,7 @@ import { VideoPlayer } from "@/components/video-player";
 import { ChatPanel } from "@/components/chat";
 import Image from "next/image";
 import { User } from "lucide-react";
+import { API_URL } from "@/lib/utils";
 
 interface StreamData {
   id: string;
@@ -30,9 +31,7 @@ export default function WatchPage() {
   useEffect(() => {
     async function fetchStream() {
       try {
-        const res = await fetch(
-          `http://localhost:8000/api/streams/user/${username}/live`,
-        );
+        const res = await fetch(`${API_URL}/api/streams/user/${username}/live`);
         if (res.ok) {
           setStream(await res.json());
         }
@@ -71,16 +70,16 @@ export default function WatchPage() {
   return (
     <div className="h-screen bg-page-bg flex flex-col">
       {/* Main Content: Video + Chat */}
-      <div className="flex-1 flex overflow-hidden">
+      <div className="flex-1 flex flex-col lg:flex-row overflow-y-auto lg:overflow-hidden">
         {/* Video + Info Section */}
         <div className="flex-1 flex flex-col min-w-0">
           {/* Video Player */}
-          <div className="w-full aspect-video bg-black">
+          <div className="w-full aspect-video bg-black sticky top-0 z-10 lg:static">
             <VideoPlayer src={hlsUrl} className="w-full h-full" />
           </div>
 
           {/* Stream Info */}
-          <div className="px-4 py-4 overflow-y-auto">
+          <div className="px-4 py-4 lg:overflow-y-auto lg:flex-1">
             <div className="flex items-start gap-4 max-w-5xl">
               {/* Avatar */}
               <div className="w-12 h-12 rounded-full bg-gradient-to-br from-brand-primary to-brand-secondary flex items-center justify-center flex-shrink-0 overflow-hidden relative">
@@ -127,7 +126,7 @@ export default function WatchPage() {
         </div>
 
         {/* Chat Sidebar */}
-        <div className="w-[340px] flex-shrink-0 hidden lg:flex">
+        <div className="w-full h-[500px] lg:w-[340px] lg:h-full flex-shrink-0 border-t lg:border-t-0 lg:border-l border-border-subtle bg-surface-primary">
           <ChatPanel streamId={stream.id} />
         </div>
       </div>
