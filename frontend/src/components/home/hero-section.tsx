@@ -29,9 +29,8 @@ export function HeroSection() {
               Live streaming platform
             </span>
           </div>
-
           <h1 className="text-5xl md:text-7xl font-bold tracking-tight">
-            <span className="bg-gradient-to-r from-brand-primary-light via-brand-accent to-brand-secondary-light bg-clip-text text-transparent glow-text">
+            <span className="bg-gradient-to-r from-brand-primary-light via-brand-accent to-brand-secondary-light bg-clip-text text-transparent">
               Watch Live Streams
             </span>
           </h1>
