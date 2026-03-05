@@ -13,6 +13,10 @@ import {
   updateProfileSchema,
   type UpdateProfileDto,
 } from './dto/updateProfile.dto';
+import {
+  changePasswordSchema,
+  type ChangePasswordDto,
+} from './dto/changePassword.dto';
 import { CurrentUser } from 'src/auth/decorators/current-user.decorator';
 import { type User } from '@prisma/client';
 import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
@@ -47,6 +51,20 @@ export class UserController {
   @UseGuards(JwtAuthGuard)
   updateStreamKey(@CurrentUser() user: User) {
     return this.userService.regenerateStreamKey(user.id);
+  }
+
+  @Put('password')
+  @UseGuards(JwtAuthGuard)
+  changePassword(
+    @CurrentUser() user: User,
+    @Body(new ZodValidationPipe(changePasswordSchema))
+    changePasswordPayload: ChangePasswordDto,
+  ) {
+    return this.userService.changePassword(
+      user.id,
+      changePasswordPayload.currentPassword,
+      changePasswordPayload.newPassword,
+    );
   }
 
   @Get(':username')

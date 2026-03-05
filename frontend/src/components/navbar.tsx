@@ -1,9 +1,17 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { Video, Search, Menu, X, User, LogOut } from "lucide-react";
+import {
+  Video,
+  Search,
+  Menu,
+  X,
+  User,
+  LogOut,
+  LayoutDashboard,
+} from "lucide-react";
 import { API_URL } from "@/lib/utils";
 
 interface CurrentUser {
@@ -19,14 +27,18 @@ export function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
   const [user, setUser] = useState<CurrentUser | null>(null);
-  const [isLoading, setIsLoading] = useState(true);
+  const hasToken = useMemo(() => {
+    if (typeof window === "undefined") return false;
+    return !!localStorage.getItem("token");
+  }, []);
+
+  const [isLoading, setIsLoading] = useState(hasToken);
 
   useEffect(() => {
+    if (!hasToken) return;
+
     const token = localStorage.getItem("token");
-    if (!token) {
-      setIsLoading(false);
-      return;
-    }
+    if (!token) return;
 
     fetch(`${API_URL}/api/auth/currentUser`, {
       headers: { Authorization: `Bearer ${token}` },
@@ -41,7 +53,7 @@ export function Navbar() {
       .then((data) => setUser(data))
       .catch(() => setUser(null))
       .finally(() => setIsLoading(false));
-  }, []);
+  }, [hasToken]);
 
   const handleSearch = (e: React.FormEvent) => {
     e.preventDefault();
@@ -105,6 +117,13 @@ export function Navbar() {
               <div className="hidden md:flex items-center gap-3">
                 {user ? (
                   <>
+                    <Link
+                      href="/dashboard"
+                      className="flex items-center gap-1.5 px-3 py-1.5 text-fg-secondary hover:text-fg-primary hover:bg-surface-secondary/40 rounded-xl transition-colors text-sm"
+                    >
+                      <LayoutDashboard className="w-4 h-4" />
+                      Dashboard
+                    </Link>
                     <Link
                       href={`/user/${user.username}`}
                       className="flex items-center gap-2 px-3 py-1.5 rounded-xl hover:bg-surface-secondary/40 transition-colors"
@@ -184,6 +203,14 @@ export function Navbar() {
             <div className="grid gap-2">
               {user ? (
                 <>
+                  <Link
+                    href="/dashboard"
+                    className="flex items-center gap-3 px-4 py-2.5 text-fg-secondary hover:text-fg-primary hover:bg-surface-secondary/40 rounded-lg transition-colors"
+                    onClick={() => setIsMenuOpen(false)}
+                  >
+                    <LayoutDashboard className="w-4 h-4" />
+                    Dashboard
+                  </Link>
                   <Link
                     href={`/user/${user.username}`}
                     className="flex items-center gap-3 px-4 py-2.5 hover:bg-surface-secondary/40 rounded-lg transition-colors"
